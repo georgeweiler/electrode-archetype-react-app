@@ -10,11 +10,13 @@ var hotConfig = require("./partial/hot");
 var baseConfig = require("./base.js");
 var defineConfig = require("./partial/define.js");
 var devConfig = require("./partial/dev.js");
+var reporterSocketConfig = require("./partial/socket.js")
 
 var config = module.exports = _.flow(
   mergeWebpackConfig.bind(null, {}, baseConfig),
   defineConfig(),
   devConfig(),
+  reporterSocketConfig(),
   hotConfig()
 )();
 

@@ -10,7 +10,7 @@ function getInt(str, def) {
       return n;
     }
   }
-
+  
   return def;
 }
 

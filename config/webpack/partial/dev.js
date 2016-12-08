@@ -4,7 +4,7 @@ var archetype = require("../../archetype");
 var mergeWebpackConfig = archetype.devRequire("webpack-partial").default;
 var ExtractTextPlugin = archetype.devRequire("extract-text-webpack-plugin");
 var webpack = archetype.devRequire("webpack");
-var WebpackReporter = archetype.devRequire("electrode-webpack-reporter");
+var WebpackReporter = archetype.devRequire("gweiler-electrode-webpack-reporter");
 var fs = require("fs");
 
 function notifyBundleValid() {
@@ -47,7 +47,21 @@ module.exports = function () {
   return function (config) {
     config = mergeWebpackConfig(config, {
       devServer: {
-        reporter: webpackDevReporter
+        reporter: webpackDevReporter,
+        proxy: {
+          "/reporter": {
+            // target: 'ws://localhost:4000',
+            // ws: true,
+            target: {
+              host: "localhost",
+              protocol: "http",
+              port: 2992
+            },
+            ignorePath: true,
+            changeOrigin: true,
+            secure: false
+          }
+        }
       },
       output: {
         publicPath: `http://${archetype.webpack.devHostname}:${archetype.webpack.devPort}/js/`,

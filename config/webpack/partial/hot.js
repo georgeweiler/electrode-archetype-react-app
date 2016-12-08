@@ -27,7 +27,21 @@ module.exports = function () {
 
     return mergeWebpackConfig(config, {
       devtool: "eval",
-      entry: entry
+      entry: entry,
+      proxy: {
+        "/reporter": {
+            // target: 'ws://localhost:4000',
+            // ws: true,
+            target: {
+              host: "localhost",
+              protocol: "http",
+              port: 2992
+            },
+            ignorePath: true,
+            changeOrigin: true,
+            secure: false
+          }
+        }
     });
   };
 };
